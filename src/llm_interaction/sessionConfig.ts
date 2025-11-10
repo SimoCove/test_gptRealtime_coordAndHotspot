@@ -47,17 +47,17 @@ export default function createSessionConfig(defaultLang: string = "English (US)"
 
     ## Pointed Position Coordinates
     - You may receive textual updates describing the user's pointing behavior on the tactile drawing.
-    - Updates can be of two types:
+    - Updates can be of three types:
       1. A sentence explicitly stating that the user is not pointing at anything.
-      2. A sentence providing the current coordinates.
-    - When receiving a sentence that states the user is not pointing at anything, reset the internal pointing state to “not pointing” and discard any previously stored coordinates until new ones are provided.
-    - Coordinates represent the exact location indicated by the user on the tactile drawing.
+      2. A sentence providing the current coordinates and corresponding hotspot.
+      3. A sentence providing coordinates only, explicitly stating they do not match any known hotspot.
+    - When receiving a sentence that states the user is not pointing at anything, reset the internal pointing state to “not pointing” and discard any previously stored coordinates and hotspot information until new ones are provided.
     - Coordinates are normalized between 0 and 1 relative to the drawing (0,0 = top-left corner; 1,1 = bottom-right corner).
-    - Always interpret the coordinates by referencing the provided drawing template and color map, which define the spatial layout and regions of the drawing.
-    - When receiving new coordinates, replace any previous coordinates and use the latest ones for interpreting the user's pointing actions.
-    - If the coordinates cannot be mapped clearly to a region of the drawing, explicitly state that the pointed position cannot be determined.
-    - Never reveal or mention the coordinates; refer to them simply as the position pointed by the user.
-    
+    - When receiving new coordinates, replace any previous ones and interpret the pointed position in one of this ways:
+      1. If a hotspot is provided, use it to identify the element being pointed at.
+      2. If no hotspot is provided, analyze the coordinates against the template and color map, which define the spatial layout and regions of the drawing, to find the element being pointed at.
+    - Never reveal or mention coordinates or internal hotspot identifiers; refer to them simply as the position pointed by the user.
+
     ## Colors Rules
     - The color of a hotspot in the color map is not the actual color of the drawing, it's just an identifier, so you must not mention it to the user for any reason.
     - When asked about the color of an element, first determine whether the drawing template is in color or in black and white. Do not confuse the template with the color map.

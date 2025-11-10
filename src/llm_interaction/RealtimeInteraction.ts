@@ -47,8 +47,8 @@ export class RealtimeInteraction {
     private requestStartTime: number | null = null;
     private responseStarted: boolean = false;
 
-    private lastCoords: { lastX: number | null, lastY: number | null } = { lastX: -1, lastY: -1 }; // -1 are only placeholders
-    private imgDimensions: { x: number; y: number } = { x: -1, y: -1 };
+    private lastCoords: { lastX: number | null, lastY: number | null } = { lastX: 100000, lastY: 100000 }; // 100000 are only placeholders
+    private imgDimensions: { x: number; y: number } = { x: -1, y: -1 }; // -1 are only placeholders
 
     // ---------------
     // INITIALIZATION
@@ -724,7 +724,7 @@ export class RealtimeInteraction {
 
             if (positionChanged) {
                 this.lastCoords = { lastX: currentX, lastY: currentY };
-                await this.sendPointedPositionCoords(currentX, currentY);
+                await this.sendPointedPositionCoordsAndHotspot(currentX, currentY, currentHotspot);
             }
 
         } catch (err) {
@@ -787,21 +787,24 @@ export class RealtimeInteraction {
         return diffX >= threshold || diffY >= threshold;
     }
 
-    private async sendPointedPositionCoords(currentX: number | null, currentY: number | null): Promise<void> {
+    private async sendPointedPositionCoordsAndHotspot(currentX: number | null, currentY: number | null, currentHotspot: string | null): Promise<void> {
         if (!this.dataChannel) throw new Error("Data channel missing");
 
         let textMsg = "";
 
-        if (currentX === null || currentY === null) {
-            textMsg = `
-                    The user is not pointing any position.
-                    `
-        } else {
+        if (currentX === null || currentY === null) { // no position pointed
+            textMsg = `The user is not pointing any position.`
+
+        } else { // position pointed
             const { normX: normX, normY: normY } = this.getNormalizedCoords(currentX, currentY);
 
             textMsg = `
                     The user is pointing the following coordinates:
                     (x: ${normX.toFixed(3)}, y: ${normY.toFixed(3)})
+                    ${!currentHotspot
+                        ? `They don't correspond to a known hotspot.`
+                        : `They correspond to this hotspot: ${currentHotspot}`
+                    }
                     `
         }
 
