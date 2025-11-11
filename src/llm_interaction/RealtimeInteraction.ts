@@ -793,7 +793,7 @@ export class RealtimeInteraction {
         let textMsg = "";
 
         if (currentX === null || currentY === null) { // no position pointed
-            textMsg = `The user is not pointing any position.`
+            textMsg = `The user is not pointing any position.`;
 
         } else { // position pointed
             const { normX: normX, normY: normY } = this.getNormalizedCoords(currentX, currentY);
@@ -805,7 +805,7 @@ export class RealtimeInteraction {
                         ? `They don't correspond to a known hotspot.`
                         : `They correspond to this hotspot: ${currentHotspot}`
                     }
-                    `
+                    `;
         }
 
         const res = {
@@ -820,7 +820,7 @@ export class RealtimeInteraction {
                     }
                 ]
             }
-        }
+        };
 
         this.dataChannel.send(JSON.stringify(res));
         console.log("User pointed position sent to the model");

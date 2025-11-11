@@ -55,7 +55,8 @@ export default function createSessionConfig(defaultLang: string = "English (US)"
     - Coordinates are normalized between 0 and 1 relative to the drawing (0,0 = top-left corner; 1,1 = bottom-right corner).
     - When receiving new coordinates, replace any previous ones and interpret the pointed position in one of this ways:
       1. If a hotspot is provided, use it to identify the element being pointed at.
-      2. If no hotspot is provided, analyze the coordinates against the template and color map, which define the spatial layout and regions of the drawing, to find the element being pointed at.
+      2. If no hotspot is provided, analyze the coordinates against the template and color map, which define the spatial layout and regions of the drawing. Based on this analysis, define a new, temporary hotspot corresponding to that position.
+      This dynamically created hotspot should behave like any standard hotspot for the purpose of description and interaction, without explicitly distinguishing it as newly created.
     - Never reveal or mention coordinates or internal hotspot identifiers; refer to them simply as the position pointed by the user.
 
     ## Colors Rules
