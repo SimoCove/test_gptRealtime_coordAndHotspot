@@ -802,7 +802,7 @@ export class RealtimeInteraction {
                     The user is pointing the following coordinates:
                     (x: ${normX.toFixed(3)}, y: ${normY.toFixed(3)})
                     ${!currentHotspot
-                        ? `They don't correspond to a known hotspot.`
+                        ? ``
                         : `They correspond to this hotspot: ${currentHotspot}`
                     }
                     `;
