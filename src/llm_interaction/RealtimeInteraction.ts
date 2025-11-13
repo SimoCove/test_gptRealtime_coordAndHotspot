@@ -809,7 +809,7 @@ export class RealtimeInteraction {
             const { normX: normX, normY: normY } = this.getNormalizedCoords(currentX, currentY);
 
             textMsg = `
-                    The user is pointing the following coordinates:
+                    The user is pointing at the following coordinates:
                     (x: ${normX.toFixed(3)}, y: ${normY.toFixed(3)})
                     ${!currentHotspot
                         ? ``
