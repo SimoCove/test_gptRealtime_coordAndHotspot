@@ -527,9 +527,7 @@ export class RealtimeInteraction {
                 content: [
                     {
                         type: "input_text",
-                        text: `
-                            Tactile drawing data:
-                            `
+                        text: "Tactile drawing data:"
                     },
                     {
                         type: "input_text",
@@ -574,13 +572,9 @@ export class RealtimeInteraction {
 
         let textMsg: string = "";
         if (type === "template") {
-            textMsg = `
-                    Tactile drawing template image:
-                    `;
+            textMsg = "Tactile drawing template image:";
         } else if (type === "colorMap") {
-            textMsg = `
-                    Tactile drawing color map image:
-                    `;
+            textMsg = "Tactile drawing color map image:";
         }
 
         const res = {
@@ -808,14 +802,12 @@ export class RealtimeInteraction {
         } else { // position pointed
             const { normX: normX, normY: normY } = this.getNormalizedCoords(currentX, currentY);
 
-            textMsg = `
-                    The user is pointing at the following coordinates:
+            textMsg = `The user is pointing at the following coordinates:
                     (x: ${normX.toFixed(3)}, y: ${normY.toFixed(3)})
                     ${!currentHotspot
                         ? ``
                         : `They correspond to this hotspot: ${currentHotspot}`
-                    }
-                    `;
+                    }`;
         }
 
         const res = {
